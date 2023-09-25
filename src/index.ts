@@ -1,4 +1,22 @@
 /**
+ * Makes the hover overlay of object type more readable.
+ * 
+ * For instance, If you have a type like this
+ * ```ts
+ * type Ugly = { a: string } & { b: number }
+ * //   ^? { a: string } & { b: number }
+ * ```
+ * This helper will prettify it:
+ * ```ts
+ * type Pretty = Prettify<Ugly>
+ * //   ^? { a: string; b: number; }
+ * ```
+*/
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & unknown;
+
+/**
  * Expect that the thing passed to Expect<T> is true.
  *
  * For instance, `Expect<true>` won't error. But
@@ -18,10 +36,10 @@ export type Expect<T extends true> = T;
  * is false.
  */
 export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
-  T,
+	T
 >() => T extends Y ? 1 : 2
-  ? true
-  : false;
+	? true
+	: false;
 
 /**
  * Checks that Y is assignable to X.
